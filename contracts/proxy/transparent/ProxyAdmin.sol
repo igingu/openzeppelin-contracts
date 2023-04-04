@@ -6,6 +6,8 @@ pragma solidity ^0.8.0;
 import "./TransparentUpgradeableProxy.sol";
 import "../../access/Ownable.sol";
 
+// @note - Reviewed
+// @note - Explanation on why one would use a ProxyAdmin - https://docs.openzeppelin.com/cli/2.8/contracts-architecture#proxyadmin.sol
 /**
  * @dev This is an auxiliary contract meant to be assigned as the admin of a {TransparentUpgradeableProxy}. For an
  * explanation of why you would want to use this see the documentation for {TransparentUpgradeableProxy}.

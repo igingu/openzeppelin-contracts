@@ -8,6 +8,7 @@ import "../../interfaces/draft-IERC1822.sol";
 import "../../utils/Address.sol";
 import "../../utils/StorageSlot.sol";
 
+// @note - Reviewed
 /**
  * @dev This abstract contract provides getters and event emitting update functions for
  * https://eips.ethereum.org/EIPS/eip-1967[EIP1967] slots.
@@ -125,6 +126,7 @@ abstract contract ERC1967Upgrade {
         _setAdmin(newAdmin);
     }
 
+    // @TODO - From here onwards
     /**
      * @dev The storage slot of the UpgradeableBeacon contract which defines the implementation for this proxy.
      * This is bytes32(uint256(keccak256('eip1967.proxy.beacon')) - 1)) and is validated in the constructor.

@@ -5,6 +5,11 @@ pragma solidity ^0.8.0;
 
 import "../ERC1967/ERC1967Proxy.sol";
 
+// @note - Reviewed
+// @note - Proxy selector clashing explained well here: 
+//       - https://medium.com/nomic-foundation-blog/malicious-backdoors-in-ethereum-proxies-62629adf3357
+//       - and here: 
+//       - https://forum.openzeppelin.com/t/beware-of-the-proxy-learn-how-to-exploit-function-clashing/1070
 /**
  * @dev This contract implements a proxy that is upgradeable by an admin.
  *
@@ -126,6 +131,11 @@ contract TransparentUpgradeableProxy is ERC1967Proxy {
      * @dev To keep this contract fully transparent, all `ifAdmin` functions must be payable. This helper is here to
      * emulate some proxy functions being non-payable while still allowing value to pass through.
      */
+    // @note - These functions have to be payable so that it is possible for functions with same selectors to be payable in implementations
+    //       - Otherwise, calling function with same selector and payable in implementation would revert in Proxy
+    //       - Since compiler would check that the function with that selector does not accept value I guess
+    //       - https://github.com/OpenZeppelin/openzeppelin-contracts/issues/3871
+    //       - https://github.com/OpenZeppelin/openzeppelin-contracts/pull/3977/files
     function _requireZeroValue() private {
         require(msg.value == 0);
     }

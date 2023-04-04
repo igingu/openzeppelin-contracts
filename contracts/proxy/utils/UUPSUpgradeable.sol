@@ -6,6 +6,10 @@ pragma solidity ^0.8.0;
 import "../../interfaces/draft-IERC1822.sol";
 import "../ERC1967/ERC1967Upgrade.sol";
 
+// @note - Reviewed
+// @note - Probably works together with ERC1967Proxy.sol, where :
+//       - ERC1967Proxy is the Proxy
+//       - implementation inherits UUPSUpgradeable
 /**
  * @dev An upgradeability mechanism designed for UUPS proxies. The functions included here can perform an upgrade of an
  * {ERC1967Proxy}, when this contract is set as the implementation behind such a proxy.

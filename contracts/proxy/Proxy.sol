@@ -3,6 +3,7 @@
 
 pragma solidity ^0.8.0;
 
+// @note - Reviewed
 /**
  * @dev This abstract contract provides a fallback function that delegates all calls to another contract using the EVM
  * instruction `delegatecall`. We refer to the second contract as the _implementation_ behind the proxy, and it has to
@@ -24,6 +25,7 @@ abstract contract Proxy {
             // Copy msg.data. We take full control of memory in this inline assembly
             // block because it will not return to Solidity code. We overwrite the
             // Solidity scratch pad at memory position 0.
+            // @note - This is okay since we never return to Solidity code, which might expect to load things using free memory pointer
             calldatacopy(0, 0, calldatasize())
 
             // Call the implementation.
