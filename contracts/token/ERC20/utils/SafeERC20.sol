@@ -7,6 +7,7 @@ import "../IERC20.sol";
 import "../extensions/IERC20Permit.sol";
 import "../../../utils/Address.sol";
 
+// @note - Reviewed
 /**
  * @title SafeERC20
  * @dev Wrappers around ERC20 operations that throw on failure (when the token
@@ -42,6 +43,8 @@ library SafeERC20 {
      * Whenever possible, use {safeIncreaseAllowance} and
      * {safeDecreaseAllowance} instead.
      */
+    // @note - In order to mitigate ERC20 approve vulnerability of spending N + M tokens
+    //       - See points 6 + 7 here: https://blockchain-projects.readthedocs.io/multiple_withdrawal.html
     function safeApprove(IERC20 token, address spender, uint256 value) internal {
         // safeApprove should only be called when setting an initial allowance,
         // or when resetting it to zero. To increase and decrease it, use
@@ -67,6 +70,8 @@ library SafeERC20 {
      * non-reverting calls are assumed to be successful.
      */
     function safeDecreaseAllowance(IERC20 token, address spender, uint256 value) internal {
+        // @question - Why are all these inside unchecked?
+        //           - I think first two lines shouldn't be, as we don't know what token.allowance does
         unchecked {
             uint256 oldAllowance = token.allowance(address(this), spender);
             require(oldAllowance >= value, "SafeERC20: decreased allowance below zero");
@@ -74,6 +79,8 @@ library SafeERC20 {
         }
     }
 
+    // @note - This would still allow malicious user to spend N + M tokens
+    //       - Looks like just a backwards-compatibility thing 
     /**
      * @dev Set the calling contract's allowance toward `spender` to `value`. If `token` returns no value,
      * non-reverting calls are assumed to be successful. Compatible with tokens that require the approval to be set to
@@ -92,6 +99,9 @@ library SafeERC20 {
      * @dev Use a ERC-2612 signature to set the `owner` approval toward `spender` on `token`.
      * Revert on invalid signature.
      */
+    // @note - Used to mitigate permit functions what do not revert on failure
+    //       - If they do not revert, state shouldn't be changed, so that's why the check for before and after nonces
+    //       - Better explanation: https://github.com/OpenZeppelin/openzeppelin-contracts/issues/3145
     function safePermit(
         IERC20Permit token,
         address owner,
@@ -114,6 +124,8 @@ library SafeERC20 {
      * @param token The token targeted by the call.
      * @param data The call data (encoded using abi.encode or one of its variants).
      */
+    // @note - Good explanation of what the SafeERC20.sol library does
+    //       - https://forum.openzeppelin.com/t/making-sure-i-understand-how-safeerc20-works/2940
     function _callOptionalReturn(IERC20 token, bytes memory data) private {
         // We need to perform a low level call here, to bypass Solidity's return data size checking mechanism, since
         // we're implementing it ourselves. We use {Address-functionCall} to perform this call, which verifies that

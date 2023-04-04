@@ -7,6 +7,7 @@ import "./IERC20.sol";
 import "./extensions/IERC20Metadata.sol";
 import "../../utils/Context.sol";
 
+// @note - Reviewed
 /**
  * @dev Implementation of the {IERC20} interface.
  *

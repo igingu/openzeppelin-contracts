@@ -31,6 +31,9 @@ abstract contract ReentrancyGuard {
     // amount. Since refunds are capped to a percentage of the total
     // transaction's gas, it is best to keep them low in cases like this one, to
     // increase the likelihood of the full refund coming into effect.
+    // @note - Having _NOT_ENTERED as 1 instead of 0, and _ENTERED as 2 instead of 1 costs less gas,
+    //       - as it is more expensive to flip a 0-value to a non-0-value
+    //       - https://medium.com/@kalexotsu/solidity-gas-optimization-stop-using-bools-for-true-false-values-e3a3d513f7fa
     uint256 private constant _NOT_ENTERED = 1;
     uint256 private constant _ENTERED = 2;
 

@@ -3,6 +3,7 @@
 
 pragma solidity ^0.8.1;
 
+// @note - Reviewed
 /**
  * @dev Collection of functions related to the address type
  */
@@ -157,6 +158,9 @@ library Address {
         bytes memory data,
         string memory errorMessage
     ) internal view returns (bytes memory) {
+        // @note - staticcall will revert if the called function will do any state changes
+        //       - useful when working with code we don't necessarily know 100% 
+        //       - we expect it to not mutate state, and staticcall enforces that
         (bool success, bytes memory returndata) = target.staticcall(data);
         return verifyCallResultFromTarget(target, success, returndata, errorMessage);
     }
@@ -199,6 +203,8 @@ library Address {
         string memory errorMessage
     ) internal view returns (bytes memory) {
         if (success) {
+            // @note - If there was no returndata, then target might have been an EOA
+            //       - We go on the assumption that target is not EOA, that's why we revert in case it is
             if (returndata.length == 0) {
                 // only check isContract if the call was successful and the return data is empty
                 // otherwise we already know that it was a contract
@@ -233,6 +239,9 @@ library Address {
         if (returndata.length > 0) {
             // The easiest way to bubble the revert reason is using memory via assembly
             /// @solidity memory-safe-assembly
+            // @note - First 32 bytes of returndata are returndata_size
+            //       - Figure out how much size is, and then revert with the actually returned data
+            //       - memory[returndata + 0x20:returndata + 0x20 + returndata_size]
             assembly {
                 let returndata_size := mload(returndata)
                 revert(add(32, returndata), returndata_size)

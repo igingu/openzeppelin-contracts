@@ -7,6 +7,7 @@ import "../token/ERC20/utils/SafeERC20.sol";
 import "../utils/Address.sol";
 import "../utils/Context.sol";
 
+// @note - Reviewed
 /**
  * @title PaymentSplitter
  * @dev This contract allows to split Ether payments among a group of accounts. The sender does not need to be aware
@@ -149,6 +150,9 @@ contract PaymentSplitter is Context {
 
         require(payment != 0, "PaymentSplitter: account is not due payment");
 
+        // @question - How can _totalReleased overflow? _totalReleased should be <= maximum amount of ETH in contract, 
+        //           - which is < type(uint256).max
+        //           - I think the addition should also be behind unchecked block
         // _totalReleased is the sum of all values in _released.
         // If "_totalReleased += payment" does not overflow, then "_released[account] += payment" cannot overflow.
         _totalReleased += payment;
@@ -172,6 +176,9 @@ contract PaymentSplitter is Context {
 
         require(payment != 0, "PaymentSplitter: account is not due payment");
 
+        // @question - How can _erc20TotalReleased overflow? _erc20TotalReleased should be <= totalSupply of ERC20 token, 
+        //           - which is < type(uint256).max
+        //           - I think the addition should also be behind unchecked block
         // _erc20TotalReleased[token] is the sum of all values in _erc20Released[token].
         // If "_erc20TotalReleased[token] += payment" does not overflow, then "_erc20Released[token][account] += payment"
         // cannot overflow.

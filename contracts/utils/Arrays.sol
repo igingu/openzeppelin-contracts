@@ -6,12 +6,14 @@ pragma solidity ^0.8.0;
 import "./StorageSlot.sol";
 import "./math/Math.sol";
 
+// @note - Reviewed
 /**
  * @dev Collection of functions related to array types.
  */
 library Arrays {
     using StorageSlot for bytes32;
 
+    // @note - Implementation of binary search, on sorted arrays with unique elements
     /**
      * @dev Searches a sorted `array` and returns the first index that contains
      * a value greater or equal to `element`. If no such index exists (i.e. all
@@ -49,6 +51,7 @@ library Arrays {
         }
     }
 
+    // @note - Unused?
     /**
      * @dev Access an array in an "unsafe" way. Skips solidity "index-out-of-range" check.
      *
@@ -67,6 +70,7 @@ library Arrays {
         return slot.getAddressSlot();
     }
 
+    // @note - Unused?
     /**
      * @dev Access an array in an "unsafe" way. Skips solidity "index-out-of-range" check.
      *
