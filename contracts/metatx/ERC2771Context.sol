@@ -5,6 +5,9 @@ pragma solidity ^0.8.9;
 
 import "../utils/Context.sol";
 
+// @note - Reviewed
+// @note - https://eips.ethereum.org/EIPS/eip-2771
+//       - To be inherited by Recipient Contract
 /**
  * @dev Context variant with ERC2771 support.
  */

@@ -6,6 +6,9 @@ pragma solidity ^0.8.0;
 import "../utils/cryptography/ECDSA.sol";
 import "../utils/cryptography/EIP712.sol";
 
+// @note - Reviewed
+// @note - https://eips.ethereum.org/EIPS/eip-2771
+//       - To be inherited by the Trusted Forwarder
 /**
  * @dev Simple minimal forwarder to be used together with an ERC2771 compatible contract. See {ERC2771Context}.
  *
