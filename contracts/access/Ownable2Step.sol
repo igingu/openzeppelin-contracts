@@ -5,6 +5,7 @@ pragma solidity ^0.8.0;
 
 import "./Ownable.sol";
 
+// @note - Reviewed
 /**
  * @dev Contract module which provides access control mechanism, where
  * there is an account (an owner) that can be granted exclusive access to

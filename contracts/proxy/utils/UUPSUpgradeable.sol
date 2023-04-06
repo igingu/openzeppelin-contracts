@@ -10,6 +10,7 @@ import "../ERC1967/ERC1967Upgrade.sol";
 // @note - Probably works together with ERC1967Proxy.sol, where :
 //       - ERC1967Proxy is the Proxy
 //       - implementation inherits UUPSUpgradeable
+// @note - Explanation of logic here, in EIP1822: https://eips.ethereum.org/EIPS/eip-1822
 /**
  * @dev An upgradeability mechanism designed for UUPS proxies. The functions included here can perform an upgrade of an
  * {ERC1967Proxy}, when this contract is set as the implementation behind such a proxy.

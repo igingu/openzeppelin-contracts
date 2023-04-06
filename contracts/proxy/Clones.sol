@@ -3,6 +3,7 @@
 
 pragma solidity ^0.8.0;
 
+// @note - Reviewed
 /**
  * @dev https://eips.ethereum.org/EIPS/eip-1167[EIP 1167] is a standard for
  * deploying minimal proxy contracts, also known as "clones".
