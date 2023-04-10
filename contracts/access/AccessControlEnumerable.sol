@@ -7,12 +7,14 @@ import "./IAccessControlEnumerable.sol";
 import "./AccessControl.sol";
 import "../utils/structs/EnumerableSet.sol";
 
+// @note - Reviewed
 /**
  * @dev Extension of {AccessControl} that allows enumerating the members of each role.
  */
 abstract contract AccessControlEnumerable is IAccessControlEnumerable, AccessControl {
     using EnumerableSet for EnumerableSet.AddressSet;
 
+    // @question - Doesn't this duplicate storage? mapping of (address has role) is both in AddressSet and AccessControl
     mapping(bytes32 => EnumerableSet.AddressSet) private _roleMembers;
 
     /**

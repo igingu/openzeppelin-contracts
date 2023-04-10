@@ -8,6 +8,7 @@ import "../utils/Context.sol";
 import "../utils/Strings.sol";
 import "../utils/introspection/ERC165.sol";
 
+// @note - Reviewed
 /**
  * @dev Contract module that allows children to implement role-based access
  * control mechanisms. This is a lightweight version that doesn't allow enumerating role
@@ -55,6 +56,7 @@ abstract contract AccessControl is Context, IAccessControl, ERC165 {
 
     mapping(bytes32 => RoleData) private _roles;
 
+    // @note - This is how, from the beginning, holder of DEFAULT_ADMIN_ROLE is admin over all roles
     bytes32 public constant DEFAULT_ADMIN_ROLE = 0x00;
 
     /**

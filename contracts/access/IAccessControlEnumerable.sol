@@ -5,6 +5,7 @@ pragma solidity ^0.8.0;
 
 import "./IAccessControl.sol";
 
+// @note - Reviewed
 /**
  * @dev External interface of AccessControlEnumerable declared to support ERC165 detection.
  */

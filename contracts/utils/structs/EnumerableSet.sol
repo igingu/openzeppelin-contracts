@@ -4,6 +4,7 @@
 
 pragma solidity ^0.8.0;
 
+// @note - Reviewed
 /**
  * @dev Library for managing
  * https://en.wikipedia.org/wiki/Set_(abstract_data_type)[sets] of primitive
