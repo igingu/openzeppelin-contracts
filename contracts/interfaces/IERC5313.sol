@@ -2,6 +2,7 @@
 
 pragma solidity ^0.8.0;
 
+// @note - Reviewed
 /**
  * @dev Interface for the Light Contract Ownership Standard.
  *

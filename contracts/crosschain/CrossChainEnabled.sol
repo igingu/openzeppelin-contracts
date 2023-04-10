@@ -5,6 +5,7 @@ pragma solidity ^0.8.4;
 
 import "./errors.sol";
 
+// @note - Reviewed
 /**
  * @dev Provides information for building cross-chain aware contracts. This
  * abstract contract provides accessors and modifiers to control the execution

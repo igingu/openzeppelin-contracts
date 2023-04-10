@@ -8,6 +8,7 @@ import "./IAccessControlDefaultAdminRules.sol";
 import "../utils/math/SafeCast.sol";
 import "../interfaces/IERC5313.sol";
 
+// @note - Reviewed
 /**
  * @dev Extension of {AccessControl} that allows specifying special rules to manage
  * the `DEFAULT_ADMIN_ROLE` holder, which is a sensitive role with special permissions
