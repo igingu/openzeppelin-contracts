@@ -5,6 +5,7 @@ pragma solidity ^0.8.0;
 
 import "./ConditionalEscrow.sol";
 
+// @note - Reviewed
 /**
  * @title RefundEscrow
  * @dev Escrow that holds funds for a beneficiary, deposited from multiple

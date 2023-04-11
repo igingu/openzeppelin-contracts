@@ -4,6 +4,7 @@ pragma solidity ^0.8.4;
 
 import "../math/SafeCast.sol";
 
+// @note - Reviewed
 /**
  * @dev A sequence of items with the ability to efficiently push and pop items (i.e. insert and remove) on both ends of
  * the sequence (called front and back). Among other access patterns, it can be used to implement efficient LIFO and

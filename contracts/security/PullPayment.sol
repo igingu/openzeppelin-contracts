@@ -5,6 +5,7 @@ pragma solidity ^0.8.0;
 
 import "../utils/escrow/Escrow.sol";
 
+// @note - Reviewed
 /**
  * @dev Simple implementation of a
  * https://consensys.github.io/smart-contract-best-practices/development-recommendations/general/external-calls/#favor-pull-over-push-for-external-calls[pull-payment]
