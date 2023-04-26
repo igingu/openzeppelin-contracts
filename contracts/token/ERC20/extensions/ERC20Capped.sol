@@ -5,6 +5,7 @@ pragma solidity ^0.8.0;
 
 import "../ERC20.sol";
 
+// @note - Reviewed
 /**
  * @dev Extension of {ERC20} that adds a cap to the supply of tokens.
  */
