@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 // OpenZeppelin Contracts (last updated v4.8.2) (governance/TimelockController.sol)
-
+`
 pragma solidity ^0.8.0;
 
 import "../access/AccessControl.sol";
@@ -8,6 +8,7 @@ import "../token/ERC721/IERC721Receiver.sol";
 import "../token/ERC1155/IERC1155Receiver.sol";
 import "../utils/Address.sol";
 
+// @note - Reviewed
 /**
  * @dev Contract module which acts as a timelocked controller. When set as the
  * owner of an `Ownable` smart contract, it enforces a timelock on all
@@ -24,10 +25,20 @@ import "../utils/Address.sol";
  * _Available since v3.3._
  */
 contract TimelockController is AccessControl, IERC721Receiver, IERC1155Receiver {
+    // @note - manager of all existing roles - set to the address of this contract, in order for access control to be managed through proposals
+    //       - can also be set to additional addresses
     bytes32 public constant TIMELOCK_ADMIN_ROLE = keccak256("TIMELOCK_ADMIN_ROLE");
+
+    // @note - holder of this role can schedule/batchSchedule operations
     bytes32 public constant PROPOSER_ROLE = keccak256("PROPOSER_ROLE");
+
+    // @note - holder of this role can execute an operation
     bytes32 public constant EXECUTOR_ROLE = keccak256("EXECUTOR_ROLE");
+
+    // @note - holder of this role can cancel an operation
     bytes32 public constant CANCELLER_ROLE = keccak256("CANCELLER_ROLE");
+
+
     uint256 internal constant _DONE_TIMESTAMP = uint256(1);
 
     mapping(bytes32 => uint256) private _timestamps;
@@ -94,6 +105,7 @@ contract TimelockController is AccessControl, IERC721Receiver, IERC1155Receiver 
         }
 
         // register proposers and cancellers
+        // @note - a proposer can both propose and cancel
         for (uint256 i = 0; i < proposers.length; ++i) {
             _setupRole(PROPOSER_ROLE, proposers[i]);
             _setupRole(CANCELLER_ROLE, proposers[i]);
@@ -114,6 +126,7 @@ contract TimelockController is AccessControl, IERC721Receiver, IERC1155Receiver 
      * considered. Granting a role to `address(0)` is equivalent to enabling
      * this role for everyone.
      */
+    // @note - Pretty cool implementation of enabling a role to everyone
     modifier onlyRoleOrOpenRole(bytes32 role) {
         if (!hasRole(role, address(0))) {
             _checkRole(role, _msgSender());
@@ -148,6 +161,7 @@ contract TimelockController is AccessControl, IERC721Receiver, IERC1155Receiver 
         return getTimestamp(id) > _DONE_TIMESTAMP;
     }
 
+    // @note - Returns true if an operation can and hasn't already been executed
     /**
      * @dev Returns whether an operation is ready or not.
      */
@@ -217,6 +231,7 @@ contract TimelockController is AccessControl, IERC721Receiver, IERC1155Receiver 
      *
      * - the caller must have the 'proposer' role.
      */
+    // @note - to call something on Timelock Controller, target should == address(this)
     function schedule(
         address target,
         uint256 value,
@@ -267,8 +282,11 @@ contract TimelockController is AccessControl, IERC721Receiver, IERC1155Receiver 
      * @dev Schedule an operation that is to become valid after a given delay.
      */
     function _schedule(bytes32 id, uint256 delay) private {
+        // @note - can't schedule duplicate operations - use salt for this
         require(!isOperation(id), "TimelockController: operation already scheduled");
         require(delay >= getMinDelay(), "TimelockController: insufficient delay");
+
+        // @note - operation can only be executed at timestamp >= block.timestamp + delay
         _timestamps[id] = block.timestamp + delay;
     }
 
@@ -280,6 +298,7 @@ contract TimelockController is AccessControl, IERC721Receiver, IERC1155Receiver 
      * - the caller must have the 'canceller' role.
      */
     function cancel(bytes32 id) public virtual onlyRole(CANCELLER_ROLE) {
+        // @note - Reverts if operation doesn't exist or has already been executed
         require(isOperationPending(id), "TimelockController: operation cannot be cancelled");
         delete _timestamps[id];
 
@@ -360,7 +379,10 @@ contract TimelockController is AccessControl, IERC721Receiver, IERC1155Receiver 
      * @dev Checks before execution of an operation's calls.
      */
     function _beforeCall(bytes32 id, bytes32 predecessor) private view {
+        // @note - Revert if not enough time has passed or operation has already been executed
         require(isOperationReady(id), "TimelockController: operation is not ready");
+
+        // @note - Revert in case it has a predecessor and the predecessor hasn't yet been executed
         require(predecessor == bytes32(0) || isOperationDone(predecessor), "TimelockController: missing dependency");
     }
 
@@ -383,6 +405,7 @@ contract TimelockController is AccessControl, IERC721Receiver, IERC1155Receiver 
      * an operation where the timelock is the target and the data is the ABI-encoded call to this function.
      */
     function updateDelay(uint256 newDelay) external virtual {
+        // @note - Such require assures this call hasn't went through a timelock proposal
         require(msg.sender == address(this), "TimelockController: caller must be timelock");
         emit MinDelayChange(_minDelay, newDelay);
         _minDelay = newDelay;
