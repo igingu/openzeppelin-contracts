@@ -7,6 +7,14 @@ import "./IBeacon.sol";
 import "../Proxy.sol";
 import "../ERC1967/ERC1967Upgrade.sol";
 
+// @note - Reviewed
+// @note - Beacon is used when we have multiple proxies pointing to the same code, and we want to update all at once
+//       - With TransparentProxy or UUPS, we would have to update each proxy
+//       - Beacon Proxy introduces a contract which holds the implementation, and all proxies point to this contract
+//       - P1 -> bProxy.getImplementation() -> UpgreadableBeacon.getImplementation() -> implementation.delegatecall()
+//       - P2 -> bProxy.getImplementation() -> UpgreadableBeacon.getImplementation() -> implementation.delegatecall()
+//       - to change implementation, call UpgreadeableBeacon.setImplementation()
+//       - BeaconProxy is used as Proxy contracts, UpgradableBeacon should be used as contract holding the implementation address
 /**
  * @dev This contract implements a proxy that gets the implementation address for each call from an {UpgradeableBeacon}.
  *

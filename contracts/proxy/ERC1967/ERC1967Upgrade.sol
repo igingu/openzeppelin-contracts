@@ -126,7 +126,6 @@ abstract contract ERC1967Upgrade {
         _setAdmin(newAdmin);
     }
 
-    // @TODO - From here onwards
     /**
      * @dev The storage slot of the UpgradeableBeacon contract which defines the implementation for this proxy.
      * This is bytes32(uint256(keccak256('eip1967.proxy.beacon')) - 1)) and is validated in the constructor.

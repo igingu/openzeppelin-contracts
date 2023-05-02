@@ -3,6 +3,7 @@
 
 pragma solidity ^0.8.0;
 
+// @note - Reviewed
 /**
  * @dev This is the interface that {BeaconProxy} expects of its beacon.
  */
