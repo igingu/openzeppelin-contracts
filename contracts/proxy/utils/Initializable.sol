@@ -5,6 +5,8 @@ pragma solidity ^0.8.2;
 
 import "../../utils/Address.sol";
 
+// @note - Reviewed
+
 /**
  * @dev This is a base contract to aid in writing upgradeable contracts, or any kind of contract that will be deployed
  * behind a proxy. Since proxied contracts do not make use of a constructor, it's common to move constructor logic to an
