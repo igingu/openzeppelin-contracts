@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 // OpenZeppelin Contracts v4.4.1 (utils/introspection/ERC165.sol)
 
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.20;
 
-import "./IERC165.sol";
+import {IERC165} from "./IERC165.sol";
 
 // @note - Reviewed
 /**
@@ -18,14 +18,14 @@ import "./IERC165.sol";
  * }
  * ```
  *
- * Alternatively, {ERC165Storage} provides an easier to use but more expensive implementation.
+ * @custom:stateless
  */
 abstract contract ERC165 is IERC165 {
     /**
      * @dev See {IERC165-supportsInterface}.
      */
     // @note - https://ethereum.stackexchange.com/a/136277/118874 explains how interfaceId is computed for off-chain
-    function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
+    function supportsInterface(bytes4 interfaceId) public view virtual returns (bool) {
         return interfaceId == type(IERC165).interfaceId;
     }
 }

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // OpenZeppelin Contracts v4.4.1 (utils/Context.sol)
 
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.20;
 
 // @note - Reviewed
 /**
@@ -13,6 +13,8 @@ pragma solidity ^0.8.0;
  * is concerned).
  *
  * This contract is only required for intermediate, library-like contracts.
+ *
+ * @custom:stateless
  */
 abstract contract Context {
     function _msgSender() internal view virtual returns (address) {

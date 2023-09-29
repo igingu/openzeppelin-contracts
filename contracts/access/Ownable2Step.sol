@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
-// OpenZeppelin Contracts (last updated v4.8.0) (access/Ownable2Step.sol)
+// OpenZeppelin Contracts (last updated v4.9.0) (access/Ownable2Step.sol)
 
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.20;
 
-import "./Ownable.sol";
+import {Ownable} from "./Ownable.sol";
 
 // @note - Reviewed
 /**
@@ -11,7 +11,7 @@ import "./Ownable.sol";
  * there is an account (an owner) that can be granted exclusive access to
  * specific functions.
  *
- * By default, the owner account will be the one that deploys the contract. This
+ * The initial owner is specified at deployment time in the constructor for `Ownable`. This
  * can later be changed with {transferOwnership} and {acceptOwnership}.
  *
  * This module is used through inheritance. It will make available all functions
@@ -52,7 +52,9 @@ abstract contract Ownable2Step is Ownable {
      */
     function acceptOwnership() public virtual {
         address sender = _msgSender();
-        require(pendingOwner() == sender, "Ownable2Step: caller is not the new owner");
+        if (pendingOwner() != sender) {
+            revert OwnableUnauthorizedAccount(sender);
+        }
         _transferOwnership(sender);
     }
 }
